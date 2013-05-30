@@ -1,6 +1,5 @@
 #!/bin/bash
 #
-pushd ~/a/waax
 java -jar compiler.jar \
 --js=src/core/WAAX.js \
 --js=src/core/Unit.js \
@@ -29,4 +28,3 @@ java -jar compiler.jar \
 --js=src/ui/UISliderV.js \
 --js=src/ui/UIKnob.js \
 --js_output_file=build/WAAX.min.js
-popd
