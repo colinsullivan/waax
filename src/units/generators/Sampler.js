@@ -31,6 +31,22 @@ WX.Sampler = function(json) {
       writable: true,
       value: false
     },
+    /**
+     *  A function to be called when the request for an audio file finishes
+     *  and succeeeds.
+     **/
+    _success: {
+      writable: true,
+      value: function () {}
+    },
+    /**
+     *  A function to be called when the request for an audio file finishes
+     *  and fails.
+     **/
+    _error: {
+      writable: true,
+      value: function () {}
+    },
     _defaults: {
       value: {
         basePitch: 60
@@ -62,8 +78,10 @@ WX.Sampler.prototype = Object.create(WX.Unit.Generator.prototype, {
         try {
           me._buffer = WX._context.createBuffer(xhr.response, true);
           me._loaded = true;
+          me._success();
           WX.info(me, "loaded: " + url);
         } catch(error) {
+          me._error();
           WX.error(me, "file loading error: " + url + " (" + error.message + ")");
         }
       };
@@ -79,6 +97,24 @@ WX.Sampler.prototype = Object.create(WX.Unit.Generator.prototype, {
     },
     set: function(pitch) {
       this._basePitch = pitch;
+    }
+  },
+  success: {
+    enumerable: true,
+    get: function () {
+      return this._success;
+    },
+    set: function (cb) {
+      this._success = cb;
+    }
+  },
+  error: {
+    enumerable: true,
+    get: function () {
+      return this._error;
+    },
+    set: function (cb) {
+      this._error = cb;
     }
   },
   noteOn: {
