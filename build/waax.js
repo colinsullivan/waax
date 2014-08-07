@@ -2155,8 +2155,7 @@ Ktrl = function() {
      **/
         onended: function() {},
         setBuffer: function(buffer) {
-            // TODO: is this working on other browsers?
-            if (buffer.constructor.name === "AudioBuffer") {
+            if (buffer instanceof AudioBuffer) {
                 this._buffer = buffer;
                 this.onload();
             }
